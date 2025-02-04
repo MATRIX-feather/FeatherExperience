@@ -14,8 +14,6 @@ import xyz.nifeather.fexp.features.ac.eventlisteners.BeaconListener;
 import xyz.nifeather.fexp.features.bonemeal.BonemealListener;
 import xyz.nifeather.fexp.features.bossbar.BossbarListener;
 import xyz.nifeather.fexp.features.deepslateFarm.DeepslateListener;
-import xyz.nifeather.fexp.features.fireaspect.FireAspectListener;
-import xyz.nifeather.fexp.features.minecart.MinecartListener;
 import xyz.nifeather.fexp.features.mobbucket.MobBucketListener;
 import xyz.nifeather.fexp.features.pvp.PvPListener;
 import xyz.nifeather.fexp.features.serverLink.ServerLinkListener;
@@ -93,9 +91,7 @@ public final class FeatherExperience extends XiaMoJavaPlugin
         pluginManager.registerEvents(new BossbarListener(), this);
         pluginManager.registerEvents(new TridentSaverListener(), this);
         pluginManager.registerEvents(new MobBucketListener(), this);
-        pluginManager.registerEvents(new MinecartListener(), this);
         pluginManager.registerEvents(new BeaconListener(), this);
-        pluginManager.registerEvents(new FireAspectListener(), this);
 
         if (enablePacketEvents)
             pluginManager.registerEvents(new ServerLinkListener(), this);

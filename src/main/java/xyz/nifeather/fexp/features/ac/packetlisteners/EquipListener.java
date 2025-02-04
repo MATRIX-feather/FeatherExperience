@@ -29,18 +29,8 @@ public class EquipListener extends AbstractListener
     private final List<Enchantment> fakeEnchantments = List.of(
             Enchantment.builder()
                     .type(EnchantmentTypes.SHARPNESS)
-                    .level(Byte.MAX_VALUE)
+                    .level(1)
                     .build()
-    );
-
-    private final List<ComponentType<?>> componentTypeWhiteList = ObjectList.of(
-            ComponentTypes.TRIM, ComponentTypes.ENCHANTMENTS,
-            ComponentTypes.CUSTOM_MODEL_DATA, ComponentTypes.ITEM_NAME,
-            ComponentTypes.POTION_CONTENTS, ComponentTypes.BANNER_PATTERNS,
-            ComponentTypes.PROFILE, ComponentTypes.BASE_COLOR,
-            ComponentTypes.DYED_COLOR, ComponentTypes.POT_DECORATIONS,
-            ComponentTypes.CHARGED_PROJECTILES, ComponentTypes.FIREWORK_EXPLOSION,
-            ComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, ComponentTypes.RARITY
     );
 
     private final Bindable<Boolean> enableWhitelist = new Bindable<>(true);
@@ -92,30 +82,12 @@ public class EquipListener extends AbstractListener
         {
             var item = equipment.getItem();
 
-            var patches = new Object2ObjectArrayMap<>(item.getComponents().getPatches());
-            patches.forEach((type, value) ->
-            {
-                if (!componentTypeWhiteList.contains(type))
-                    item.unsetComponent(type);
-
-                // Do we really need these in a normal survival?
-                    /*
-                    if (type == ComponentTypes.CHARGED_PROJECTILES && value.isPresent())
-                    {
-                        var projectiles = (ChargedProjectiles) value.get();
-                        var componentMap = new PatchableComponentMap(new Object2ObjectArrayMap<>());
-                        projectiles.getItems().forEach(stack -> stack.setComponents(componentMap));
-                    }
-                    */
-            });
-
             if (item.isEnchanted(userClientVersion))
                 item.setEnchantments(fakeEnchantments, userClientVersion);
 
-            item.setAmount(Integer.MAX_VALUE);
+            item.setAmount(1);
 
-            item.setDamageValue(Integer.MAX_VALUE);
-            item.setLegacyData(0);
+            item.setDamageValue(1);
         });
     }
 }
