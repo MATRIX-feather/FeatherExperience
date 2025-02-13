@@ -1,12 +1,16 @@
 package xyz.nifeather.fexp.features.pvp;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.jetbrains.annotations.Nullable;
 import xiamomc.pluginbase.Annotations.Initializer;
 import xiamomc.pluginbase.Bindables.Bindable;
 import xyz.nifeather.fexp.FPluginObject;
@@ -69,15 +73,25 @@ public class PvPListener extends FPluginObject implements Listener
         return noPvpPlayers.stream().anyMatch(uuid -> uuid.equals(player));
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityHurtEntity(EntityDamageByEntityEvent event)
     {
         if (!enabled.get()) return;
 
         var entity = event.getEntity();
-        var damager = event.getDamager();
+        Entity damager = event.getDamager();
 
-        if (entity.getType() != EntityType.PLAYER || damager.getType() != EntityType.PLAYER)
+        if (damager instanceof Projectile projectile)
+        {
+            damager = null;
+
+            var ownerUUID = projectile.getOwnerUniqueId();
+
+            if (ownerUUID != null)
+                damager = Bukkit.getPlayer(ownerUUID);
+        }
+
+        if (damager == null || entity.getType() != EntityType.PLAYER || damager.getType() != EntityType.PLAYER)
             return;
 
         var damagerLocale = MessageUtils.getLocale(damager);
