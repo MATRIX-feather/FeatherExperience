@@ -10,8 +10,8 @@ import net.minecrell.pluginyml.paper.PaperPluginDescription
 plugins {
     java
     `maven-publish`
-    id("io.papermc.paperweight.userdev") version "1.7.7"
-    id("xyz.jpenilla.run-paper") version "2.0.1" // Adds runServer and runMojangMappedServer tasks for testing
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
+    id("xyz.jpenilla.run-paper") version "2.3.1" // Adds runServer and runMojangMappedServer tasks for testing
     id("net.minecrell.plugin-yml.paper") version "0.6.0" // Generates plugin.yml
     id("io.github.goooler.shadow") version "8.1.7" // Shadow PluginBase
 }
@@ -63,8 +63,7 @@ repositories {
 paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODUCTION
 
 dependencies {
-    //todo: Switch back to `paperDevBundle`
-    paperweight.foliaDevBundle("${project.property("minecraft_version")}")
+    paperweight.paperDevBundle("${project.property("minecraft_version")}")
 
     //compileOnly("com.comphenix.protocol:ProtocolLib:${project.property("protocollib_version")}")
 
@@ -147,14 +146,30 @@ paper {
     }
 }
 
+// See https://github.com/jpenilla/run-task/wiki/Debugging#hot-swap
+tasks.withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
+    javaLauncher = javaToolchains.launcherFor {
+        vendor = JvmVendorSpec.JETBRAINS
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+
+    jvmArgs("-XX:+AllowEnhancedClassRedefinition", "-Dbstats.relocatecheck=false")
+}
+
 tasks.build {
     dependsOn(tasks.shadowJar)
 }
 
 tasks.shadowJar {
-    minimize()
-    relocate("xiamomc.pluginbase", "xyz.nifeather.fexp.shaded.pluginbase")
-    relocate("org.bstats", "xyz.nifeather.fexp.shaded.bstats")
+
+    if (System.getenv("NO_RELOCATE") == "yes") {
+        System.out.println("Not relocating classes!")
+    } else {
+        minimize()
+        relocate("xiamomc.pluginbase", "xyz.nifeather.fexp.shaded.pluginbase")
+        relocate("org.bstats", "xyz.nifeather.fexp.shaded.bstats")
+    }
+
 }
 
 tasks.withType<JavaCompile>() {

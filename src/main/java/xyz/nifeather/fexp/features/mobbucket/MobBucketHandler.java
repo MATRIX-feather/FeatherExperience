@@ -1,12 +1,14 @@
 package xyz.nifeather.fexp.features.mobbucket;
 
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.CustomData;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.entity.CraftEntitySnapshot;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SpawnEggMeta;
 import org.jetbrains.annotations.Nullable;
 import xiamomc.pluginbase.Annotations.Initializer;
 import xiamomc.pluginbase.Annotations.Resolved;
@@ -16,6 +18,7 @@ import xyz.nifeather.fexp.FPluginObject;
 import xyz.nifeather.fexp.config.FConfigManager;
 import xyz.nifeather.fexp.config.FConfigOptions;
 import xyz.nifeather.fexp.misc.integrations.coreprotect.CoreProtectIntegration;
+import xyz.nifeather.fexp.utilities.ItemUtils;
 
 import java.util.List;
 
@@ -95,9 +98,6 @@ public class MobBucketHandler extends FPluginObject
         if (!whitelist.isEmpty() && !whitelist.contains(mobId))
             return false;
 
-        var newItem = ItemStack.empty();
-        newItem.setAmount(1);
-
         var typeName = "%s_SPAWN_EGG".formatted(clickedEntity.getType().name().toUpperCase());
         Material eggType = Material.ALLAY_SPAWN_EGG;
 
@@ -113,16 +113,22 @@ public class MobBucketHandler extends FPluginObject
             return false;
         }
 
-        newItem.setType(eggType);
-        var meta = (SpawnEggMeta)newItem.getItemMeta();
+        var newItem = ItemStack.of(eggType, 1);
 
-        meta.setCustomSpawnedType(clickedEntity.getType());
-        meta.setSpawnedEntity(CraftEntitySnapshot.create((CraftEntity) clickedEntity));
+        var nmsItem = CraftItemStack.asNMSCopy(newItem);
 
-        if (clickedEntity.customName() != null)
-            meta.displayName(clickedEntity.customName());
+        var compound = CraftEntitySnapshot.create((CraftEntity) clickedEntity).getData();
 
-        newItem.setItemMeta(meta);
+        compound.putBoolean("PersistenceRequired", true);
+
+        if (clickedEntity instanceof Ageable ageable && ageable.isAdult())
+        {
+            compound.putInt("Age", 0);
+            compound.putBoolean("IsBaby", false);
+        }
+
+        nmsItem.set(DataComponents.ENTITY_DATA, CustomData.of(compound));
+        newItem = ItemUtils.markEgg(nmsItem).asBukkitCopy();
 
         clickedEntity.remove();
 
