@@ -53,7 +53,7 @@ public final class FeatherExperience extends XiaMoJavaPlugin
     private Metrics metrics;
     private PvPListener pvpListener;
 
-    private static boolean enablePacketEvents = true;
+    private static boolean enablePacketEvents = false;
 
     @Override
     public void onLoad()

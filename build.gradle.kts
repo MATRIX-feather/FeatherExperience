@@ -119,6 +119,21 @@ paper {
             required = false;
             joinClasspath = true
         }
+        register("CoreProtect") {
+            load = PaperPluginDescription.RelativeLoadOrder.BEFORE;
+            required = false;
+            joinClasspath = true
+        }
+        register("Towny") {
+            load = PaperPluginDescription.RelativeLoadOrder.BEFORE;
+            required = false;
+            joinClasspath = true
+        }
+        register("PlaceholderAPI") {
+            load = PaperPluginDescription.RelativeLoadOrder.BEFORE;
+            required = false;
+            joinClasspath = true
+        }
     }
 /*
     commands {
@@ -144,6 +159,11 @@ paper {
 
         register("${permissionRoot}.shulkerbox.use").get().default = BukkitPluginDescription.Permission.Default.TRUE;
     }
+}
+
+// https://stackoverflow.com/a/74848372
+tasks.withType<Jar> {
+    exclude("plugin.yml")
 }
 
 // See https://github.com/jpenilla/run-task/wiki/Debugging#hot-swap
