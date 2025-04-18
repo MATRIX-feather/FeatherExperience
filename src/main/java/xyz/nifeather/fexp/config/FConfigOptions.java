@@ -29,9 +29,6 @@ public class FConfigOptions
 
     public static final ConfigOption<Boolean> FEAT_DEEPSLATE_FARM = new ConfigOption<>(featureNode().append("deepslate").append("farm"), true);
 
-    public static final ConfigOption<Boolean> WARDEN_BOSSBAR = new ConfigOption<>(featureNode().append("bossbar").append("warden"), true);
-    public static final ConfigOption<Boolean> WARDEN_BOSSBAR_SHOW_ANGER = new ConfigOption<>(featureNode().append("bossbar").append("warden_show_anger"), false);
-
     public static final ConfigOption<Boolean> TRIDENT = new ConfigOption<>(featureNode().append("save_tridents_from_void").append("enabled"), true);
 
     public static final ConfigOption<Boolean> VILLAGER_EGG = new ConfigOption<>(featureNode().append("mob_eggs").append("enabled"), true);
@@ -39,16 +36,9 @@ public class FConfigOptions
     public static final ConfigOption<List<String>> EGG_DISABLED_MOBS = new ConfigOption<>(featureNode().append("mob_eggs").append("disabled_mobs"), List.of("minecraft:disabled_1", "minecraft:disabled_2"));
     public static final ConfigOption<List<String>> EGG_WHITELIST = new ConfigOption<>(featureNode().append("mob_eggs").append("mob_whitelist"), List.of());
 
-    public static final ConfigOption<Boolean> MINECART = new ConfigOption<>(featureNode().append("minecart").append("enabled"), true);
-    public static final ConfigOption<List<String>> MINECART_CONFIGS = new ConfigOption<>(featureNode().append("minecart").append("configs"), List.of("minecraft:bedrock=1.5"));
-
-    public static final ConfigOption<Boolean> COMPONENT_WHITELIST = new ConfigOption<>(featureNode().append("protocol").append("component_whitelist"), true);
-
     public static final ConfigOption<Boolean> PVP_TOGGLE_ENABLED = new ConfigOption<>(featureNode().append("pvp").append("enabled"), true);
     public static final ConfigOption<String> PVP_ENABLED_MESSAGE = new ConfigOption<>(featureNode().append("pvp").append("enabled_message"), "<color:#e0f2f1>PVP已启用</color>");
     public static final ConfigOption<String> PVP_DISABLED_MESSAGE = new ConfigOption<>(featureNode().append("pvp").append("disabled_message"), "<color:#e0f2f1>PVP已禁用</color>");
-
-    public static final ConfigOption<List<String>> SERVER_LINKS = new ConfigOption<>(featureNode().append("server_links"), List.of());
 
     public static final ConfigOption<Boolean> ALLOW_TORCH_CROSSBOW = new ConfigOption<>(featureNode().append("torch_crossbow").append("enabled"), true);
 

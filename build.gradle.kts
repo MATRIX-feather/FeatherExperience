@@ -106,6 +106,7 @@ java.sourceCompatibility = JavaVersion.VERSION_21
 paper {
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     main = "xyz.nifeather.fexp.FeatherExperience"
+    bootstrapper = "xyz.nifeather.fexp.FeatherExperienceBootstrap"
     apiVersion = "1.21"
     authors = listOf("MATRIX-feather")
     version = "${project.property("project_version")}"
