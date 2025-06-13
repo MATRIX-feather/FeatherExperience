@@ -68,23 +68,17 @@ public class VoidSaveEnchantmentListener extends FPluginObject implements Listen
         if (lastValidLocation.getY() < itemEntity.getWorld().getMinHeight())
             return false;
 
-        itemEntity.teleportAsync(itemEntity.getLocation().add(0, 6000, 0)).thenRun(() ->
+        itemEntity.teleportAsync(lastValidLocation).thenRun(() ->
         {
-            itemEntity.teleportAsync(lastValidLocation).thenRun(() ->
-            {
-                itemEntity.getItemStack().editMeta(meta -> meta.removeEnchant(ench));
-                itemEntity.setItemStack(itemEntity.getItemStack());
-                itemEntity.setPickupDelay(0);
+            //itemEntity.getItemStack().editMeta(meta -> meta.removeEnchant(ench));
+            //itemEntity.setItemStack(itemEntity.getItemStack());
+            itemEntity.setPickupDelay(0);
 
-                var random = new Random();
-                itemEntity.setVelocity(new Vector(
-                        random.nextDouble(-0.05d, 0.05d),
-                        0.1d,
-                        random.nextDouble(-0.05d, 0.05d)
-                ));
+            itemEntity.setVelocity(new Vector(0, 0, 0));
+            itemEntity.setGravity(false);
+            //itemEntity.setGlowing(true);
 
-                itemEntity.getWorld().playSound(itemEntity.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
-            });
+            itemEntity.getWorld().playSound(itemEntity.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
         });
 
         return false;
