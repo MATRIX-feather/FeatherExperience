@@ -10,6 +10,7 @@ import xiamomc.pluginbase.XiaMoJavaPlugin;
 import xyz.nifeather.fexp.commands.FCommandHelper;
 import xyz.nifeather.fexp.config.FConfigManager;
 import xyz.nifeather.fexp.features.ac.eventlisteners.BeaconListener;
+import xyz.nifeather.fexp.features.anvil.NoExpensiveListener;
 import xyz.nifeather.fexp.features.bonemeal.BonemealListener;
 import xyz.nifeather.fexp.features.deepslateFarm.DeepslateListener;
 import xyz.nifeather.fexp.features.enchantments.EnchantmentListenerHub;
@@ -89,6 +90,7 @@ public final class FeatherExperience extends XiaMoJavaPlugin
         pluginManager.registerEvents(new TridentSaverListener(), this);
         pluginManager.registerEvents(new MobBucketListener(), this);
         pluginManager.registerEvents(new BeaconListener(), this);
+        pluginManager.registerEvents(new NoExpensiveListener(), this);
 
         new EnchantmentListenerHub().registerListeners();
 
