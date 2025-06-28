@@ -26,6 +26,6 @@ public class ItemUtils
 
         if (customData == null || !customData.contains(MOBEGG_IDENTIFIER)) return false;
 
-        return customData.copyTag().getBoolean(MOBEGG_IDENTIFIER);
+        return customData.copyTag().getBoolean(MOBEGG_IDENTIFIER).orElse(false);
     }
 }

@@ -10,7 +10,7 @@ import net.minecrell.pluginyml.paper.PaperPluginDescription
 plugins {
     java
     `maven-publish`
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
     id("xyz.jpenilla.run-paper") version "2.3.1" // Adds runServer and runMojangMappedServer tasks for testing
     id("net.minecrell.plugin-yml.paper") version "0.6.0" // Generates plugin.yml
     id("io.github.goooler.shadow") version "8.1.7" // Shadow PluginBase

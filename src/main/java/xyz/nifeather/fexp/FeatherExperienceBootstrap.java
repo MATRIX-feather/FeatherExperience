@@ -6,8 +6,8 @@ import io.papermc.paper.plugin.lifecycle.event.registrar.ReloadableRegistrarEven
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry;
+import io.papermc.paper.registry.event.RegistryComposeEvent;
 import io.papermc.paper.registry.event.RegistryEvents;
-import io.papermc.paper.registry.event.RegistryFreezeEvent;
 import io.papermc.paper.tag.PostFlattenTagRegistrar;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemType;
@@ -29,7 +29,7 @@ public class FeatherExperienceBootstrap implements PluginBootstrap
 
         lifeCycleManager.registerEventHandler(LifecycleEvents.TAGS.postFlatten(RegistryKey.ITEM).newHandler(this::onItemTagsPostFlatten));
         lifeCycleManager.registerEventHandler(LifecycleEvents.TAGS.postFlatten(RegistryKey.ENCHANTMENT).newHandler(this::onEnchantmentTagsPostFlatten));
-        lifeCycleManager.registerEventHandler(RegistryEvents.ENCHANTMENT.freeze().newHandler(this::onEnchantmentFreeze));
+        lifeCycleManager.registerEventHandler(RegistryEvents.ENCHANTMENT.compose().newHandler(this::onEnchantmentFreeze));
 
         LOGGER.info("Done running bootstrap!");
     }
@@ -44,7 +44,7 @@ public class FeatherExperienceBootstrap implements PluginBootstrap
         EnchantmentIndex.INSTANCE.getEnchantments().forEach(enchantment -> enchantment.onEnchantmentTagRegister(event));
     }
 
-    private void onEnchantmentFreeze(RegistryFreezeEvent<Enchantment, EnchantmentRegistryEntry.Builder> event)
+    private void onEnchantmentFreeze(RegistryComposeEvent<Enchantment, EnchantmentRegistryEntry.Builder> event)
     {
         EnchantmentIndex.INSTANCE.getEnchantments().forEach(enchantment -> enchantment.onEnchantmentRegister(event));
     }

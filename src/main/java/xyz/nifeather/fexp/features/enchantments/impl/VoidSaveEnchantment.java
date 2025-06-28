@@ -4,7 +4,7 @@ import io.papermc.paper.plugin.lifecycle.event.registrar.ReloadableRegistrarEven
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry;
-import io.papermc.paper.registry.event.RegistryFreezeEvent;
+import io.papermc.paper.registry.event.RegistryComposeEvent;
 import io.papermc.paper.registry.keys.EnchantmentKeys;
 import io.papermc.paper.registry.keys.ItemTypeKeys;
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys;
@@ -59,7 +59,7 @@ public class VoidSaveEnchantment implements IEnchantment
     }
 
     @Override
-    public void onEnchantmentRegister(RegistryFreezeEvent<Enchantment, EnchantmentRegistryEntry.Builder> event)
+    public void onEnchantmentRegister(RegistryComposeEvent<Enchantment, EnchantmentRegistryEntry.Builder> event)
     {
         var registry = event.registry();
 
