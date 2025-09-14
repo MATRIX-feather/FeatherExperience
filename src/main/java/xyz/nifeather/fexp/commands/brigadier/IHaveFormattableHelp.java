@@ -19,6 +19,6 @@ public interface IHaveFormattableHelp
 
     default public List<FormattableMessage> getNotes()
     {
-        return List.of(new FormattableMessage(FeatherExperience.namespace(), "_", "_"));
+        return List.of(new FormattableMessage(FeatherExperience.namespaceStatic(), "_", "_"));
     }
 }

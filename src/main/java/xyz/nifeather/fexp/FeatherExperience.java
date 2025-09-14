@@ -3,8 +3,10 @@ package xyz.nifeather.fexp;
 import com.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import net.kyori.adventure.key.KeyPattern;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.NotNull;
 import xiamomc.pluginbase.Messages.MessageStore;
 import xiamomc.pluginbase.XiaMoJavaPlugin;
 import xyz.nifeather.fexp.commands.FCommandHelper;
@@ -33,7 +35,14 @@ public final class FeatherExperience extends XiaMoJavaPlugin
 
     private final static String namespace = "fexp";
 
-    public static String namespace()
+    public static String namespaceStatic()
+    {
+        return namespace;
+    }
+
+    @KeyPattern.Namespace
+    @Override
+    public @NotNull String namespace()
     {
         return namespace;
     }

@@ -174,6 +174,6 @@ public class FMessageStore extends MessageStore<FeatherExperience>
     @Override
     protected String getPluginNamespace()
     {
-        return FeatherExperience.namespace();
+        return FeatherExperience.namespaceStatic();
     }
 }

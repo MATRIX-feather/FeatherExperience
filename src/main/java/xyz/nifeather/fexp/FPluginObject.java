@@ -22,6 +22,6 @@ public class FPluginObject extends PluginObject<FeatherExperience>
     @Override
     protected String getPluginNamespace()
     {
-        return FeatherExperience.namespace();
+        return FeatherExperience.namespaceStatic();
     }
 }

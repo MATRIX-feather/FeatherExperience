@@ -18,7 +18,7 @@ public class MessageUtils extends FPluginObject
     private static void setupConfigManager()
     {
         if (pluginDepMgr == null)
-            pluginDepMgr = DependencyManager.getInstance(FeatherExperience.namespace());
+            pluginDepMgr = DependencyManager.getInstance(FeatherExperience.namespaceStatic());
 
         config = pluginDepMgr.get(FConfigManager.class);
         plugin = FeatherExperience.getInstance();
@@ -91,7 +91,7 @@ public class MessageUtils extends FPluginObject
     {
         if (configManager != null) return;
 
-        var depMgr = DependencyManager.getInstance(FeatherExperience.namespace());
+        var depMgr = DependencyManager.getInstance(FeatherExperience.namespaceStatic());
         var config = depMgr.get(FConfigManager.class);
 
         if (config != null)

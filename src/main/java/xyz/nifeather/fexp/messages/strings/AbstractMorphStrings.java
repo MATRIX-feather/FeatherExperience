@@ -6,7 +6,7 @@ import xyz.nifeather.fexp.FeatherExperience;
 
 public abstract class AbstractMorphStrings implements IStrings
 {
-    private static final String nameSpace = FeatherExperience.namespace();
+    private static final String nameSpace = FeatherExperience.namespaceStatic();
 
     protected static FormattableMessage getFormattable(String key, String defaultValue)
     {

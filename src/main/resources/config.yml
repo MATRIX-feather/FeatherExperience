@@ -114,4 +114,4 @@ root:
         - "minecraft:bedrock=1.5"
 
   # Do not touch unless you know what you're doing!
-  version: 9
+  version: 10

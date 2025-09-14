@@ -8,6 +8,6 @@ public abstract class FJsonStorage<T> extends JsonBasedStorage<T, FeatherExperie
     @Override
     protected String getPluginNamespace()
     {
-        return FeatherExperience.namespace();
+        return FeatherExperience.namespaceStatic();
     }
 }
