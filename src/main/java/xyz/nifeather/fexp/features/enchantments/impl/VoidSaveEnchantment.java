@@ -17,6 +17,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemType;
+import org.jetbrains.annotations.NotNull;
 import xyz.nifeather.fexp.features.enchantments.IEnchantment;
 
 import java.util.List;
@@ -24,22 +25,23 @@ import java.util.List;
 @SuppressWarnings("UnstableApiUsage")
 public class VoidSaveEnchantment implements IEnchantment
 {
-    public static final TagKey<ItemType> voidProtectionItemKey = TagKey.create(RegistryKey.ITEM, Key.key("nifeather", "void_saving_items"));
-    public static final TypedKey<Enchantment> voidProtectionEnchantmentKey = EnchantmentKeys.create(Key.key("nifeather", "void_saving"));
+    public static final TagKey<@NotNull ItemType> voidProtectionItemKey = TagKey.create(RegistryKey.ITEM, Key.key("nifeather", "void_saving_items"));
+    public static final TypedKey<@NotNull Enchantment> voidProtectionEnchantmentKey = EnchantmentKeys.create(Key.key("nifeather", "void_saving"));
 
     @Override
-    public void onItemTagRegister(ReloadableRegistrarEvent<PostFlattenTagRegistrar<ItemType>> event)
+    public void onItemTagRegister(ReloadableRegistrarEvent<@NotNull PostFlattenTagRegistrar<@NotNull ItemType>> event)
     {
         var registry = event.registrar();
 
         // 为【虚空排斥】提前设定支持的物品
-        var voidProtItems = new ObjectArrayList<TypedKey<ItemType>>();
+        var voidProtItems = new ObjectArrayList<TypedKey<@NotNull ItemType>>();
         voidProtItems.addAll(registry.getTag(ItemTypeTagKeys.SWORDS));
         voidProtItems.addAll(registry.getTag(ItemTypeTagKeys.AXES));
         voidProtItems.addAll(registry.getTag(ItemTypeTagKeys.PICKAXES));
         voidProtItems.addAll(registry.getTag(ItemTypeTagKeys.SHOVELS));
         voidProtItems.addAll(registry.getTag(ItemTypeTagKeys.HOES));
         voidProtItems.addAll(registry.getTag(ItemTypeTagKeys.ENCHANTABLE_ARMOR));
+        voidProtItems.add(ItemTypeKeys.ELYTRA);
 
         voidProtItems.add(ItemTypeKeys.TRIDENT);
         voidProtItems.add(ItemTypeKeys.CROSSBOW);
@@ -49,7 +51,7 @@ public class VoidSaveEnchantment implements IEnchantment
     }
 
     @Override
-    public void onEnchantmentTagRegister(ReloadableRegistrarEvent<PostFlattenTagRegistrar<Enchantment>> event)
+    public void onEnchantmentTagRegister(ReloadableRegistrarEvent<@NotNull PostFlattenTagRegistrar<@NotNull Enchantment>> event)
     {
         var registry = event.registrar();
 
@@ -59,7 +61,7 @@ public class VoidSaveEnchantment implements IEnchantment
     }
 
     @Override
-    public void onEnchantmentRegister(RegistryComposeEvent<Enchantment, EnchantmentRegistryEntry.Builder> event)
+    public void onEnchantmentRegister(RegistryComposeEvent<@NotNull Enchantment, EnchantmentRegistryEntry.@NotNull Builder> event)
     {
         var registry = event.registry();
 
