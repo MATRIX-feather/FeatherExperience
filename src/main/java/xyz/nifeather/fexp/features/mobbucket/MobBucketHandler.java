@@ -1,7 +1,10 @@
 package xyz.nifeather.fexp.features.mobbucket;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.entity.CraftEntity;
@@ -117,6 +120,7 @@ public class MobBucketHandler extends FPluginObject
 
         var nmsItem = CraftItemStack.asNMSCopy(newItem);
 
+        var nmsEntity = ((CraftEntity)clickedEntity).getHandle();
         var compound = CraftEntitySnapshot.create((CraftEntity) clickedEntity).getData();
 
         compound.putBoolean("PersistenceRequired", true);
@@ -127,7 +131,7 @@ public class MobBucketHandler extends FPluginObject
             compound.putBoolean("IsBaby", false);
         }
 
-        nmsItem.set(DataComponents.ENTITY_DATA, CustomData.of(compound));
+        nmsItem.set(DataComponents.ENTITY_DATA, TypedEntityData.of(nmsEntity.getType(), compound));
         newItem = ItemUtils.markEgg(nmsItem).asBukkitCopy();
 
         clickedEntity.remove();

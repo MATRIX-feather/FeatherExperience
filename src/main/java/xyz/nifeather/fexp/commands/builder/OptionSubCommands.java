@@ -44,7 +44,7 @@ public class OptionSubCommands
 
             sender.sendMessage(MessageUtils.prefixes(sender,
                     CommandStrings.optionSetString()
-                            .withLocale(MessageUtils.getLocale(sender))
+                            .preferredLocale(MessageUtils.getLocale(sender))
                             .resolve("what", name)
                             .resolve("value", value + "")));
         }
@@ -53,7 +53,7 @@ public class OptionSubCommands
         {
             sender.sendMessage(MessageUtils.prefixes(sender,
                     CommandStrings.optionValueString()
-                            .withLocale(MessageUtils.getLocale(sender))
+                            .preferredLocale(MessageUtils.getLocale(sender))
                             .resolve("what", name)
                             .resolve("value", config.get(option) + "")));
         }
@@ -245,7 +245,7 @@ public class OptionSubCommands
             {
                 sender.sendMessage(MessageUtils.prefixes(sender,
                         CommandStrings.listRemoveSuccess()
-                                .withLocale(MessageUtils.getLocale(sender))
+                                .preferredLocale(MessageUtils.getLocale(sender))
                                 .resolve("value", value)
                                 .resolve("option", optionName)));
             }
@@ -253,7 +253,7 @@ public class OptionSubCommands
             {
                 sender.sendMessage(MessageUtils.prefixes(sender,
                         CommandStrings.listRemoveFailUnknown()
-                                .withLocale(MessageUtils.getLocale(sender))
+                                .preferredLocale(MessageUtils.getLocale(sender))
                                 .resolve("value", value)
                                 .resolve("option", optionName)));
             }
@@ -316,7 +316,7 @@ public class OptionSubCommands
                 {
                     sender.sendMessage(MessageUtils.prefixes(sender,
                             CommandStrings.listAddSuccess()
-                                    .withLocale(MessageUtils.getLocale(sender))
+                                    .preferredLocale(MessageUtils.getLocale(sender))
                                     .resolve("value", value)
                                     .resolve("option", optionName)));
                 }
@@ -324,7 +324,7 @@ public class OptionSubCommands
                 {
                     sender.sendMessage(MessageUtils.prefixes(sender,
                             CommandStrings.listAddFailUnknown()
-                                    .withLocale(MessageUtils.getLocale(sender))
+                                    .preferredLocale(MessageUtils.getLocale(sender))
                                     .resolve("value", value)
                                     .resolve("option", optionName)));
                 }
@@ -333,7 +333,7 @@ public class OptionSubCommands
             {
                 sender.sendMessage(MessageUtils.prefixes(sender,
                         CommandStrings.listAddFailUnknown()
-                                .withLocale(MessageUtils.getLocale(sender))
+                                .preferredLocale(MessageUtils.getLocale(sender))
                                 .resolve("value", value)
                                 .resolve("option", optionName)));
 
@@ -388,7 +388,7 @@ public class OptionSubCommands
             var sender = context.getSource().getSender();
             sender.sendMessage(MessageUtils.prefixes(sender,
                     CommandStrings.optionValueString()
-                            .withLocale(MessageUtils.getLocale(sender))
+                            .preferredLocale(MessageUtils.getLocale(sender))
                             .resolve("what", optionName)
                             .resolve("value", displayValue)));
 
@@ -470,7 +470,7 @@ public class OptionSubCommands
             var sender = context.getSource().getSender();
             sender.sendMessage(MessageUtils.prefixes(sender,
                     CommandStrings.optionValueString()
-                            .withLocale(MessageUtils.getLocale(sender))
+                            .preferredLocale(MessageUtils.getLocale(sender))
                             .resolve("what", name)
                             .resolve("value", config.get(option) + "")));
             return 1;

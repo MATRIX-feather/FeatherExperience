@@ -44,9 +44,9 @@ public class MessageUtils extends FPluginObject
         var prefix = new FormattableMessage(plugin, config.getOrDefault(FConfigOptions.MESSAGE_PREFIX));
 
         return prefix
-                .withLocale(getLocale(sender))
+                .preferredLocale(getLocale(sender))
                 .resolve("message", finalComponent)
-                .toComponent(null);
+                .createComponent();
     }
 
     public static Component prefixes(CommandSender sender, String str)
@@ -61,10 +61,10 @@ public class MessageUtils extends FPluginObject
 
     public static Component prefixes(CommandSender sender, FormattableMessage formattable)
     {
-        if (formattable.getLocale() == null)
-            formattable.withLocale(getLocale(sender));
+        if (!formattable.hasPriorityLocale())
+            formattable.preferredLocale(getLocale(sender));
 
-        return prefixes(sender, formattable.toComponent(null));
+        return prefixes(sender, formattable.createComponent());
     }
 
     @NotNull

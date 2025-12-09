@@ -97,13 +97,13 @@ public class PvPListener extends FPluginObject implements Listener
         var damagerLocale = MessageUtils.getLocale(damager);
         if (isPlayerDisabledPVP(damager.getUniqueId()))
         {
-            damager.sendActionBar(PVPStrings.pvpDisabledForDamagerString().toComponent(damagerLocale));
+            damager.sendActionBar(PVPStrings.pvpDisabledForDamagerString().createComponent(damagerLocale));
             event.setCancelled(true);
         }
 
         if (isPlayerDisabledPVP(entity.getUniqueId()))
         {
-            damager.sendActionBar(PVPStrings.pvpDisabledForVictimString().toComponent(damagerLocale));
+            damager.sendActionBar(PVPStrings.pvpDisabledForVictimString().createComponent(damagerLocale));
             event.setCancelled(true);
         }
     }

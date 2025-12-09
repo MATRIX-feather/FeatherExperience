@@ -40,15 +40,8 @@ public final class FeatherExperience extends XiaMoJavaPlugin
         return namespace;
     }
 
-    @KeyPattern.Namespace
     @Override
-    public @NotNull String namespace()
-    {
-        return namespace;
-    }
-
-    @Override
-    public String getNameSpace()
+    public String getNamespace()
     {
         return namespace;
     }
@@ -88,9 +81,9 @@ public final class FeatherExperience extends XiaMoJavaPlugin
     }
 
     @Override
-    public void onEnable()
+    public void enable()
     {
-        super.onEnable();
+        super.enable();
 
         var pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new BonemealListener(), this);
@@ -114,7 +107,9 @@ public final class FeatherExperience extends XiaMoJavaPlugin
 
         softDeps.setHandle("Towny", pl -> MobBucketListener.townyInstalled = true, true);
 
-        dependencyManager.cache(new FConfigManager(this));
+        var config = new FConfigManager(this);
+        config.reload();
+        dependencyManager.cache(config);
         dependencyManager.cacheAs(MessageStore.class, new FMessageStore());
 
         var cmdHelper = new FCommandHelper();
@@ -134,9 +129,9 @@ public final class FeatherExperience extends XiaMoJavaPlugin
     private ShulkerListener shulkerListener;
 
     @Override
-    public void onDisable()
+    public void disable()
     {
-        super.onDisable();
+        super.disable();
 
         try
         {
