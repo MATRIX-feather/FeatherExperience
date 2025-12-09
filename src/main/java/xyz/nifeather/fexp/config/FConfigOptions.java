@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class FConfigOptions
 {
-    public static final ConfigOption<String> MESSAGE_PREFIX = new ConfigOption<>(ConfigNode.create().append("message_pattern"), String.class, "[FExp] <message>");
+    public static final ConfigOption<String> MESSAGE_PREFIX = new ConfigOption<>(ConfigNode.create().append("message_pattern"), String.class, "<color:#dddddd> <sprite:item/feather> » <message>");
     public static final ConfigOption<String> LANGUAGE_CODE = new ConfigOption<>(ConfigNode.create().append("language"), String.class, "en_us");
     public static final ConfigOption<Boolean> SINGLE_LANGUAGE = new ConfigOption<>(ConfigNode.create().append("single_language"), Boolean.class, false);
 
@@ -47,8 +47,6 @@ public class FConfigOptions
             .build();
 
     public static final ConfigOption<Boolean> PVP_TOGGLE_ENABLED = new ConfigOption<>(featureNode().append("pvp").append("enabled"), Boolean.class, true);
-    public static final ConfigOption<String> PVP_ENABLED_MESSAGE = new ConfigOption<>(featureNode().append("pvp").append("enabled_message"), String.class, "<color:#e0f2f1>PVP已启用</color>");
-    public static final ConfigOption<String> PVP_DISABLED_MESSAGE = new ConfigOption<>(featureNode().append("pvp").append("disabled_message"), String.class, "<color:#e0f2f1>PVP已禁用</color>");
 
     public static final ConfigOption<Boolean> ALLOW_TORCH_CROSSBOW = new ConfigOption<>(featureNode().append("torch_crossbow").append("enabled"), Boolean.class, true);
 

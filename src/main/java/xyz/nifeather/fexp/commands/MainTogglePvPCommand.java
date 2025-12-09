@@ -20,6 +20,8 @@ import xyz.nifeather.fexp.config.FConfigManager;
 import xyz.nifeather.fexp.config.FConfigOptions;
 import xyz.nifeather.fexp.features.pvp.PvPListener;
 import xyz.nifeather.fexp.features.pvp.PvPStatus;
+import xyz.nifeather.fexp.messages.MessageUtils;
+import xyz.nifeather.fexp.messages.strings.PVPStrings;
 
 public class MainTogglePvPCommand extends FPluginObject implements IConvertibleBrigadier
 {
@@ -31,8 +33,6 @@ public class MainTogglePvPCommand extends FPluginObject implements IConvertibleB
 
     public MainTogglePvPCommand()
     {
-        config.bind(enabledString, FConfigOptions.PVP_ENABLED_MESSAGE);
-        config.bind(disabledString, FConfigOptions.PVP_DISABLED_MESSAGE);
         config.bind(toggleAllowed, FConfigOptions.PVP_TOGGLE_ENABLED);
     }
 
@@ -62,8 +62,6 @@ public class MainTogglePvPCommand extends FPluginObject implements IConvertibleB
 
 
     private final Bindable<Boolean> toggleAllowed = new Bindable<>(false);
-    private final Bindable<String> enabledString = new Bindable<>("<yellow>missingno");
-    private final Bindable<String> disabledString = new Bindable<>("<yellow>missingno");
 
     private int execute(CommandContext<CommandSourceStack> context)
     {
@@ -79,9 +77,9 @@ public class MainTogglePvPCommand extends FPluginObject implements IConvertibleB
 
         var result = pvpListener.toggleFor(player);
         if (result == PvPStatus.ENABLED)
-            player.sendMessage(MiniMessage.miniMessage().deserialize(enabledString.get()));
+            MessageUtils.send(player, PVPStrings.enabledPVP());
         else
-            player.sendMessage(MiniMessage.miniMessage().deserialize(disabledString.get()));
+            MessageUtils.send(player, PVPStrings.disabledPVP());
 
         return 1;
     }

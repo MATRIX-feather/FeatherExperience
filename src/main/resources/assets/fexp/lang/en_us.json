@@ -15,6 +15,8 @@
 
   "pvp.damager_pvp_disabled": "<red>Your PvP is disabled",
   "pvp.victim_pvp_disabled": "<red>They have disabled their PvP",
+  "pvp.pvp_enabled": "<color:#e0f2f1>Now enabled PVP</color>",
+  "pvp.pvp_disabled": "<color:#e0f2f1>Now disabled PVP</color>",
 
   "types.double": "Double",
   "types.float": "Float",

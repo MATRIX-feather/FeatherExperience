@@ -2,7 +2,7 @@
 root:
 
   # The message pattern used for this plugin to display messages for players
-  message_pattern: '[FExp] <message>'
+  message_pattern: "<color:#dddddd> <sprite:item/feather> » <message>"
 
   # Language
   language: en_us
@@ -61,12 +61,6 @@ root:
     pvp:
       # Should we handle PvP events?
       enabled: true
-
-      # The message to show when players enable their PvP
-      enabled_message: "<color:#e0f2f1>PVP Enabled</color>"
-
-      # The message to show when players disable their PvP
-      disabled_message: "<color:#e0f2f1>PVP Disabled</color>"
 
     # Turn mobs into spawn eggs when clicked with an egg
     mob_eggs:
