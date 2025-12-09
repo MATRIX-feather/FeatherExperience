@@ -20,8 +20,8 @@ import xiamomc.pluginbase.Messages.FormattableMessage;
 import xyz.nifeather.fexp.commands.brigadier.BrigadierCommand;
 import xyz.nifeather.fexp.commands.helpsections.Entry;
 import xyz.nifeather.fexp.commands.helpsections.Section;
+import xyz.nifeather.fexp.messages.MessageUtils;
 import xyz.nifeather.fexp.messages.strings.HelpStrings;
-import xyz.nifeather.fexp.utilities.MessageUtils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -206,7 +206,7 @@ public class HelpSubCommand extends BrigadierCommand
         var sender = context.getSource().getSender();
 
         for (var s : constructHelpMessage(sender))
-            sender.sendMessage(MessageUtils.prefixes(sender, s));
+            MessageUtils.send(sender, s);
 
         return 1;
     }
@@ -222,10 +222,12 @@ public class HelpSubCommand extends BrigadierCommand
         if (section != null)
         {
             for (var s : constructSectionMessage(sender, section))
-                sender.sendMessage(MessageUtils.prefixes(sender, s));
+                MessageUtils.send(sender, s);
         }
         else
-            sender.sendMessage(MessageUtils.prefixes(sender, HelpStrings.sectionNotFoundString().createComponent(MessageUtils.getLocale(sender))));
+        {
+            MessageUtils.send(sender, HelpStrings.sectionNotFoundString());
+        }
 
         return 1;
     }

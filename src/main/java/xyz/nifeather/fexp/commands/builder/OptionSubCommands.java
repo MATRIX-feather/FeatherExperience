@@ -15,9 +15,10 @@ import xiamomc.pluginbase.Configuration.ConfigOption;
 import xiamomc.pluginbase.Configuration.PluginConfigManager;
 import xiamomc.pluginbase.Messages.FormattableMessage;
 import xyz.nifeather.fexp.commands.brigadier.BrigadierCommand;
+import xyz.nifeather.fexp.config.FConfigOptions;
+import xyz.nifeather.fexp.messages.MessageUtils;
 import xyz.nifeather.fexp.messages.strings.CommandStrings;
 import xyz.nifeather.fexp.utilities.BindableUtils;
-import xyz.nifeather.fexp.utilities.MessageUtils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -42,20 +43,18 @@ public class OptionSubCommands
         {
             config.set(option, value);
 
-            sender.sendMessage(MessageUtils.prefixes(sender,
+            MessageUtils.send(sender,
                     CommandStrings.optionSetString()
-                            .preferredLocale(MessageUtils.getLocale(sender))
                             .resolve("what", name)
-                            .resolve("value", value + "")));
+                            .resolve("value", value + ""));
         }
 
-        protected void lookupConfig(CommandSender sender, Class<?> type)
+        protected void lookupConfig(CommandSender sender)
         {
-            sender.sendMessage(MessageUtils.prefixes(sender,
+            MessageUtils.send(sender,
                     CommandStrings.optionValueString()
-                            .preferredLocale(MessageUtils.getLocale(sender))
                             .resolve("what", name)
-                            .resolve("value", config.get(option) + "")));
+                            .resolve("value", config.get(option) + ""));
         }
 
         @Override
@@ -70,9 +69,9 @@ public class OptionSubCommands
         private final List<String> knownValues;
 
         public LimiterStringListOptionCommand(String name,
-                                            PluginConfigManager configManager,
-                                            ConfigOption option,
-                                            List<String> knownValues)
+                                              PluginConfigManager configManager,
+                                              ConfigOption<String> option,
+                                              List<String> knownValues)
         {
             super(name, configManager, option);
 
@@ -103,7 +102,7 @@ public class OptionSubCommands
 
         public int executesNoArg(CommandContext<CommandSourceStack> context)
         {
-            lookupConfig(context.getSource().getSender(), String.class);
+            lookupConfig(context.getSource().getSender());
             return 0;
         }
 
@@ -150,7 +149,7 @@ public class OptionSubCommands
 
     public static class StringListOptionBaseCommand extends BasicOptionCommand<List<String>>
     {
-        public StringListOptionBaseCommand(String name, PluginConfigManager configManager, ConfigOption option)
+        public StringListOptionBaseCommand(String name, PluginConfigManager configManager, ConfigOption<List<String>> option)
         {
             super(name, configManager, option);
         }
@@ -164,9 +163,9 @@ public class OptionSubCommands
         @Override
         public void registerAsChild(ArgumentBuilder<CommandSourceStack, ?> parentBuilder)
         {
-            var operationList = new OperationListCommand(config, option, name);
-            var operationAdd = new OperationAddCommand(config, option, name);
-            var operationRemove = new OperationRemoveCommand(config, option, name);
+            var operationList = new ListOperationListCommand(config, option, name);
+            var operationAdd = new ListOperationAddCommand(config, option, name);
+            var operationRemove = new ListOperationRemoveCommand(config, option, name);
 
             var thisBuilder = Commands.literal(name());
 
@@ -174,7 +173,7 @@ public class OptionSubCommands
             operationAdd.registerAsChild(thisBuilder);
             operationRemove.registerAsChild(thisBuilder);
 
-            super.registerAsChild(parentBuilder);
+            parentBuilder.then(thisBuilder);
         }
 
 
@@ -185,24 +184,23 @@ public class OptionSubCommands
         }
     }
 
-    private abstract static class OperationCommand extends BrigadierCommand
+    private abstract static class ListOperationCommand extends BrigadierCommand
     {
         protected final PluginConfigManager configManager;
-        protected final ConfigOption configOption;
+        protected final ConfigOption<List<String>> configOption;
         protected final String optionName;
 
-        public OperationCommand(PluginConfigManager configManager, ConfigOption option, String optionName)
+        public ListOperationCommand(PluginConfigManager configManager, ConfigOption<List<String>> option, String optionName)
         {
             this.configManager = configManager;
             this.configOption = option;
             this.optionName = optionName;
         }
-
     }
 
-    protected static class OperationRemoveCommand extends OperationCommand
+    protected static class ListOperationRemoveCommand extends ListOperationCommand
     {
-        public OperationRemoveCommand(PluginConfigManager configManager, ConfigOption option, String optionName)
+        public ListOperationRemoveCommand(PluginConfigManager configManager, ConfigOption<List<String>> option, String optionName)
         {
             super(configManager, option, optionName);
         }
@@ -243,19 +241,17 @@ public class OptionSubCommands
 
             if (listChanged)
             {
-                sender.sendMessage(MessageUtils.prefixes(sender,
+                MessageUtils.send(sender,
                         CommandStrings.listRemoveSuccess()
-                                .preferredLocale(MessageUtils.getLocale(sender))
                                 .resolve("value", value)
-                                .resolve("option", optionName)));
+                                .resolve("option", optionName));
             }
             else
             {
-                sender.sendMessage(MessageUtils.prefixes(sender,
+                MessageUtils.send(sender,
                         CommandStrings.listRemoveFailUnknown()
-                                .preferredLocale(MessageUtils.getLocale(sender))
                                 .resolve("value", value)
-                                .resolve("option", optionName)));
+                                .resolve("option", optionName));
             }
 
             return 1;
@@ -268,9 +264,9 @@ public class OptionSubCommands
         }
     }
 
-    protected static class OperationAddCommand extends OperationCommand
+    protected static class ListOperationAddCommand extends ListOperationCommand
     {
-        public OperationAddCommand(PluginConfigManager configManager, ConfigOption option, String optionName)
+        public ListOperationAddCommand(PluginConfigManager configManager, ConfigOption<List<String>> option, String optionName)
         {
             super(configManager, option, optionName);
         }
@@ -314,28 +310,25 @@ public class OptionSubCommands
                 //workaround: List的add方法传入非null时永远返回true
                 if (bindableList.contains(value))
                 {
-                    sender.sendMessage(MessageUtils.prefixes(sender,
+                    MessageUtils.send(sender,
                             CommandStrings.listAddSuccess()
-                                    .preferredLocale(MessageUtils.getLocale(sender))
                                     .resolve("value", value)
-                                    .resolve("option", optionName)));
+                                    .resolve("option", optionName));
                 }
                 else
                 {
-                    sender.sendMessage(MessageUtils.prefixes(sender,
+                    MessageUtils.send(sender,
                             CommandStrings.listAddFailUnknown()
-                                    .preferredLocale(MessageUtils.getLocale(sender))
                                     .resolve("value", value)
-                                    .resolve("option", optionName)));
+                                    .resolve("option", optionName));
                 }
             }
             catch (Throwable t)
             {
-                sender.sendMessage(MessageUtils.prefixes(sender,
+                MessageUtils.send(sender,
                         CommandStrings.listAddFailUnknown()
-                                .preferredLocale(MessageUtils.getLocale(sender))
                                 .resolve("value", value)
-                                .resolve("option", optionName)));
+                                .resolve("option", optionName));
 
                 logger.error("Error adding option to bindable list: " + t.getMessage());
             }
@@ -350,9 +343,9 @@ public class OptionSubCommands
         }
     }
 
-    protected static class OperationListCommand extends OperationCommand
+    protected static class ListOperationListCommand extends ListOperationCommand
     {
-        public OperationListCommand(PluginConfigManager configManager, ConfigOption option, String optionName)
+        public ListOperationListCommand(PluginConfigManager configManager, ConfigOption<List<String>> option, String optionName)
         {
             super(configManager, option, optionName);
         }
@@ -386,11 +379,10 @@ public class OptionSubCommands
             var displayValue = BindableUtils.bindableListToString(bindableList);
 
             var sender = context.getSource().getSender();
-            sender.sendMessage(MessageUtils.prefixes(sender,
+            MessageUtils.send(sender,
                     CommandStrings.optionValueString()
-                            .preferredLocale(MessageUtils.getLocale(sender))
                             .resolve("what", optionName)
-                            .resolve("value", displayValue)));
+                            .resolve("value", displayValue));
 
             return 1;
         }
@@ -404,7 +396,7 @@ public class OptionSubCommands
 
     public static class IntegerOptionCommand extends BasicOptionCommand<Integer>
     {
-        public IntegerOptionCommand(String name, PluginConfigManager configManager, ConfigOption option)
+        public IntegerOptionCommand(String name, PluginConfigManager configManager, ConfigOption<Integer> option)
         {
             super(name, configManager, option);
         }
@@ -451,7 +443,7 @@ public class OptionSubCommands
                     Commands.literal(name)
                             .executes(this::executes)
                             .then(
-                                    Commands.argument("value", IntegerArgumentType.integer())
+                                    Commands.argument("value", IntegerArgumentType.integer(min, max))
                                             .executes(this::execSetConfig)
                             )
             );
@@ -461,18 +453,14 @@ public class OptionSubCommands
 
         public int executes(CommandContext<CommandSourceStack> context)
         {
-            lookupConfig(context.getSource().getSender(), Integer.class);
+            lookupConfig(context.getSource().getSender());
             return 1;
         }
 
         private int execSetConfig(CommandContext<CommandSourceStack> context)
         {
             var sender = context.getSource().getSender();
-            sender.sendMessage(MessageUtils.prefixes(sender,
-                    CommandStrings.optionValueString()
-                            .preferredLocale(MessageUtils.getLocale(sender))
-                            .resolve("what", name)
-                            .resolve("value", config.get(option) + "")));
+            this.setConfig(sender, IntegerArgumentType.getInteger(context, "value"));
             return 1;
         }
 
@@ -487,7 +475,7 @@ public class OptionSubCommands
     {
         public BooleanOptionCommand(String name,
                                     PluginConfigManager config,
-                                    ConfigOption option)
+                                    ConfigOption<Boolean> option)
         {
             super(name, config, option);
         }
@@ -510,7 +498,7 @@ public class OptionSubCommands
 
         public int executes(CommandContext<CommandSourceStack> context)
         {
-            lookupConfig(context.getSource().getSender(), Boolean.class);
+            lookupConfig(context.getSource().getSender());
             return 1;
         }
 

@@ -20,7 +20,6 @@ import xyz.nifeather.fexp.config.FConfigManager;
 import xyz.nifeather.fexp.config.FConfigOptions;
 import xyz.nifeather.fexp.features.pvp.PvPListener;
 import xyz.nifeather.fexp.features.pvp.PvPStatus;
-import xyz.nifeather.fexp.utilities.MessageUtils;
 
 public class MainTogglePvPCommand extends FPluginObject implements IConvertibleBrigadier
 {

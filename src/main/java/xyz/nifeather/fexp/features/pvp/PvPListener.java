@@ -17,8 +17,8 @@ import xyz.nifeather.fexp.FPluginObject;
 import xyz.nifeather.fexp.config.FConfigManager;
 import xyz.nifeather.fexp.config.FConfigOptions;
 import xyz.nifeather.fexp.features.pvp.storage.PVPStorage;
+import xyz.nifeather.fexp.messages.MessageUtils;
 import xyz.nifeather.fexp.messages.strings.PVPStrings;
-import xyz.nifeather.fexp.utilities.MessageUtils;
 
 import java.util.Collections;
 import java.util.List;

@@ -21,7 +21,7 @@ import xyz.nifeather.fexp.features.pvp.PvPListener;
 import xyz.nifeather.fexp.features.shulker.ShulkerListener;
 import xyz.nifeather.fexp.features.trident.TridentSaverListener;
 import xyz.nifeather.fexp.features.xpCooldown.ExpCooldownListener;
-import xyz.nifeather.fexp.messages.FMessageStore;
+import xyz.nifeather.fexp.messages.TranslateManager;
 import xyz.nifeather.fexp.misc.integrations.coreprotect.CoreProtectIntegration;
 
 public final class FeatherExperience extends XiaMoJavaPlugin
@@ -110,7 +110,7 @@ public final class FeatherExperience extends XiaMoJavaPlugin
         var config = new FConfigManager(this);
         config.reload();
         dependencyManager.cache(config);
-        dependencyManager.cacheAs(MessageStore.class, new FMessageStore());
+        dependencyManager.cacheAs(MessageStore.class, TranslateManager.instance().asFrameworkMessageStore());
 
         var cmdHelper = new FCommandHelper();
         dependencyManager.cache(cmdHelper);
