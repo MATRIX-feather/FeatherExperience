@@ -86,13 +86,13 @@ public class CoralHandler extends FPluginObject implements IBonemealHandler
 
         if (dimensionRegistry == null) return false;
 
-        var key = serverLevel.dimension().location();
+        var key = serverLevel.dimension().identifier();
         LevelStem levelStem = dimensionRegistry.getValue(key);
 
         if (levelStem == null)
         {
             logger.warn("We can't place feature at world '%s'"
-                    .formatted(serverLevel.dimension().location().toString()));
+                    .formatted(serverLevel.dimension().identifier().toString()));
 
             return false;
         }
